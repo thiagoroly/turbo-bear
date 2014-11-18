@@ -359,6 +359,7 @@ public class Acidentes<E> implements ListaTAD<E> {
 				aux.lista[2] = (E) (s + " 00:00");
 				aux.lista[18] = (E) "NOITE";
 				System.out.println(s);
+				//teste de commit
 			}
 			aux = aux.nextDate;
 			
