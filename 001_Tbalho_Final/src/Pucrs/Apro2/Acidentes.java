@@ -18,7 +18,7 @@ public class Acidentes<E> implements ListaTAD<E> {
 
 	public Acidentes() {
 	}
-
+//testando commit inicial 
 	@SuppressWarnings("unchecked")
 	public void leArquivo() {
 		Path path = Paths.get("acidentes.csv");
@@ -29,7 +29,7 @@ public class Acidentes<E> implements ListaTAD<E> {
 			@SuppressWarnings("unused")
 			String linha = sc.nextLine();
 
-			while (i < 20000) { // TODO para agilizar os teste do código
+			while (i < 20000) { // TODO para agilizar os teste do cÃ³digo
 				// while(sc.hasNext()){
 				E[] listaA = (E[]) new Object[21];
 				for (int j = 0; j < 20; j++) {
@@ -37,7 +37,7 @@ public class Acidentes<E> implements ListaTAD<E> {
 						String s = sc.next();
 						int a = s.indexOf(" ");
 						if (a > 0) {
-							// TODO falta tratar esta exeção
+							// TODO falta tratar esta exeï¿½ï¿½o
 							listaA[20] = (E) s.subSequence(0, a);
 							listaA[0] = (E) s.subSequence(a + 1, s.length());
 						} else {
@@ -53,7 +53,7 @@ public class Acidentes<E> implements ListaTAD<E> {
 
 			}
 		} catch (IOException x) {
-			System.err.println("Arquivo não existe");
+			System.err.println("Arquivo nï¿½o existe");
 		}
 	}
 
@@ -246,7 +246,7 @@ public class Acidentes<E> implements ListaTAD<E> {
 		int conta = 0;
 		Node<E> aux = headStret;
 		while (aux != null) {
-			// TODO tratar a excessão caso a string não seja outra coisa se não
+			// TODO tratar a excessï¿½o caso a string nï¿½o seja outra coisa se nï¿½o
 			// um numero.
 			int b = Integer.parseInt((String) aux.lista[coluna]);
 			conta = conta + b;
@@ -381,17 +381,17 @@ public class Acidentes<E> implements ListaTAD<E> {
 		    // esse FOR percorre toda a lista
 		    // ele pega a String da data e hora
 		    // e faz e retiara apenas o inteiro da hora
-		    // esse inteiro ele apenas soma um na posição da hora
+		    // esse inteiro ele apenas soma um na posiï¿½ï¿½o da hora
 
 		    for (int i = 0;i < count; i++ ){
 		        String s = (String) aux.lista[2];
-		        // aqui tive que ser obrigado a utilizar o TRY, por conta de erros na formatação da linha.
+		        // aqui tive que ser obrigado a utilizar o TRY, por conta de erros na formataï¿½ï¿½o da linha.
 		        try{
 		        int h = Integer.parseInt(s.substring(9, 11));   
 		        horas[h] = horas[h] + 1;
 		        }
 		        catch(Exception e){
-		            //System.out.println("erro na formatação da linha " + i );
+		            //System.out.println("erro na formataï¿½ï¿½o da linha " + i );
 		        }
 		        aux=aux.nextDate;
 		    }
@@ -415,7 +415,7 @@ public class Acidentes<E> implements ListaTAD<E> {
 
 		    return j;
 		}
-		// método que retorna uma String com o dia que tiveram mais acidente no Arquivo.
+		// mï¿½todo que retorna uma String com o dia que tiveram mais acidente no Arquivo.
 		public String diaMaisAcidentes() {
 
 		    Node<E> aux = headDate;
