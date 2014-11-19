@@ -18,7 +18,6 @@ public class Acidentes<E> implements ListaTAD<E> {
 
 	public Acidentes() {
 	}
-//testando commit inicial 
 	@SuppressWarnings("unchecked")
 	public void leArquivo() {
 		Path path = Paths.get("acidentes.csv");
