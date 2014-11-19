@@ -368,5 +368,90 @@ public class Acidentes<E> implements ListaTAD<E> {
 		
 		
 	}
+	
+	public String horaMaisAcidentes(){
+		Node aux = headDate;
+		//cria uma lista de 24 inteiros e coloca zero em todos os elementos dela.
+
+		int [] horas = new int[24];
+		for(int i=0; i<24; i++){
+		horas[i]=0;
+		}
+
+		    // esse FOR percorre toda a lista
+		    // ele pega a String da data e hora
+		    // e faz e retiara apenas o inteiro da hora
+		    // esse inteiro ele apenas soma um na posição da hora
+
+		    for (int i = 0;i < count; i++ ){
+		        String s = (String) aux.lista[2];
+		        // aqui tive que ser obrigado a utilizar o TRY, por conta de erros na formatação da linha.
+		        try{
+		        int h = Integer.parseInt(s.substring(9, 11));   
+		        horas[h] = horas[h] + 1;
+		        }
+		        catch(Exception e){
+		            //System.out.println("erro na formatação da linha " + i );
+		        }
+		        aux=aux.nextDate;
+		    }
+
+		    // nessa parte ele verifica qual a hora com maior numero de acidentes.
+		    String j = "00h";
+		    int x = horas[0];
+		    System.out.println(x + " 0h");
+		    for(int i=1; i<24; i++){
+		        if(horas[i] > x){
+		            if(i <10) j = "0" + i + "h";
+		            j = i + "h";
+		            x = horas[i];
+		        }else if(horas[i]==x){
+		            if(i <10) j = j + " 0" + i + "h";
+		            j = j + " " + i + "h";
+		        }
+
+		    }
+
+
+		    return j;
+		}
+		// método que retorna uma String com o dia que tiveram mais acidente no Arquivo.
+		public String diaMaisAcidentes() {
+
+		    Node<E> aux = headDate;
+		    int contaMaior = 0;
+		    int contaMenor = 0;
+		    String j = "";
+		    String s;
+		    String s2;
+		    String su = "";
+		    String su2 = "";
+
+		    for (int i = 0; i < count; i++) {
+
+		        contaMenor++;
+		        try {
+		            s = (String) aux.lista[2];
+		            su = s.substring(0, 8);
+		            s2 = (String) aux.nextDate.lista[2];
+		            su2 = s2.substring(0, 8);
+		        } catch (Exception e) {
+		            // ultimo elemento da lista.
+		        }
+		        if (!su.equals(su2)) {
+
+		            if (contaMenor > contaMaior) {
+		                contaMaior = contaMenor;
+		                j = su;
+		            } else if (contaMenor == contaMaior) {
+		                j = j + "\n" + su;
+		            }
+		            contaMenor = 0;
+		        }
+		        aux = aux.nextDate;
+		    }
+		    return j + " Com " + contaMaior + " Acidentes";
+		}
+	
 
 }
