@@ -435,7 +435,7 @@ public class Acidentes<E> implements ListaTAD<E> {
 		            s2 = (String) aux.nextDate.lista[2];
 		            su2 = s2.substring(0, 8);
 		        } catch (Exception e) {
-		            // ultimo elemento da lista.
+		            su2 = "";
 		        }
 		        if (!su.equals(su2)) {
 
@@ -443,7 +443,7 @@ public class Acidentes<E> implements ListaTAD<E> {
 		                contaMaior = contaMenor;
 		                j = su;
 		            } else if (contaMenor == contaMaior) {
-		                j = j + "\n" + su;
+		                j = j + "\n" +  ;
 		            }
 		            contaMenor = 0;
 		        }
