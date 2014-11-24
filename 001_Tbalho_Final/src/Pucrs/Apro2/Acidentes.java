@@ -9,7 +9,6 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Acidentes<E> implements ListaTAD<E> {
-
 	private Node<E> headStret;
 	private Node<E> tailStret;
 	private Node<E> headDate;
@@ -18,25 +17,37 @@ public class Acidentes<E> implements ListaTAD<E> {
 
 	public Acidentes() {
 	}
+
+	public void leArquivo(String caminho) {
+		leArquivo(caminho, 0);		
+	}
+	
 	@SuppressWarnings("unchecked")
-	public void leArquivo() {
-		Path path = Paths.get("acidentes.csv");
+	public void leArquivo(String caminho, int linhas) {
+		Path path = Paths.get(caminho);
 		try (Scanner sc = new Scanner(Files.newBufferedReader(path,
 				Charset.defaultCharset()))) {
 			sc.useDelimiter("[;\n]");
+			
+			////Pular o cabeçalho
+			for (int j = 0; j < 20; j++) {
+				sc.next();
+			}
+			
 			int i = 0;
-			@SuppressWarnings("unused")
-			String linha = sc.nextLine();
-
-			while (i < 20000) { // TODO para agilizar os teste do código
-				// while(sc.hasNext()){
+			while(sc.hasNext()){
 				E[] listaA = (E[]) new Object[21];
+				if(linhas != 0){
+					if(i == linhas){
+						return;
+					}
+				}
 				for (int j = 0; j < 20; j++) {
 					if (j == 0) {
 						String s = sc.next();
 						int a = s.indexOf(" ");
 						if (a > 0) {
-							// TODO falta tratar esta exe��o
+							// TODO falta tratar esta exeção
 							listaA[20] = (E) s.subSequence(0, a);
 							listaA[0] = (E) s.subSequence(a + 1, s.length());
 						} else {
@@ -49,20 +60,17 @@ public class Acidentes<E> implements ListaTAD<E> {
 				}
 				i++;
 				add((E) listaA);
-
 			}
 		} catch (IOException x) {
-			System.err.println("Arquivo n�o existe");
+			System.err.println("Arquivo não existe:\n" + x.getMessage());
 		}
 	}
 
 	@SuppressWarnings("hiding")
 	private class Node<E> {
-
 		public E[] lista;
 		public E stret;
 		public E dataHora;
-
 		public Node<E> prevStret;
 		public Node<E> prevDate;
 		public Node<E> nextStret;
@@ -70,11 +78,9 @@ public class Acidentes<E> implements ListaTAD<E> {
 
 		@SuppressWarnings({ "unchecked" })
 		public Node(E e) {
-
 			lista = (E[]) e;
 			stret = (E) lista[0];
 			dataHora = (E) lista[2];
-
 			prevStret = null;
 			nextStret = null;
 			prevDate = null;
@@ -83,13 +89,11 @@ public class Acidentes<E> implements ListaTAD<E> {
 
 		public E getStret() {
 			return stret;
-
 		}
 
 		public E getDataHora() {
 			return dataHora;
 		}
-
 		// TODO fazer um toString();
 	}
 
@@ -110,11 +114,9 @@ public class Acidentes<E> implements ListaTAD<E> {
 						aux.lista[19]);
 				aux = aux.nextStret;
 			}
-
 		} catch (IOException x) {
 			System.err.format("Erro de E/S: %s%n", x);
 		}
-
 	}
 
 	public void gravadorData() {
@@ -134,17 +136,13 @@ public class Acidentes<E> implements ListaTAD<E> {
 						aux.lista[19]);
 				aux = aux.nextDate;
 			}
-
 		} catch (IOException x) {
 			System.err.format("Erro de E/S: %s%n", x);
 		}
-
 	}
 
-	
 	@Override
 	public void add(E e) {
-		// TODO
 		Node<E> newNode = new Node<E>(e);
 		if (count == 0) {
 			headStret = newNode;
@@ -206,10 +204,8 @@ public class Acidentes<E> implements ListaTAD<E> {
 					headDate = newNode;
 				}
 			}
-
 			// #########################################
 		}
-
 	}
 
 	@Override
@@ -238,14 +234,13 @@ public class Acidentes<E> implements ListaTAD<E> {
 	@Override
 	public void clear() {
 		// TODO Auto-generated method stub
-
 	}
 
 	public int contador(int coluna) {
 		int conta = 0;
 		Node<E> aux = headStret;
 		while (aux != null) {
-			// TODO tratar a excess�o caso a string n�o seja outra coisa se n�o
+			// TODO tratar a excessão caso a string não seja outra coisa se não
 			// um numero.
 			int b = Integer.parseInt((String) aux.lista[coluna]);
 			conta = conta + b;
@@ -260,7 +255,6 @@ public class Acidentes<E> implements ListaTAD<E> {
 		while (aux != null) {
 			if (aux.lista[coluna].equals(s))
 				conta++;
-
 			aux = aux.nextStret;
 		}
 		return conta;
@@ -273,7 +267,6 @@ public class Acidentes<E> implements ListaTAD<E> {
 			String sList = (String) aux.lista[19];
 			if (sList.substring(0, 2).equals(s))
 				conta++;
-
 			aux = aux.nextStret;
 		}
 		return conta;
@@ -283,20 +276,15 @@ public class Acidentes<E> implements ListaTAD<E> {
 	public String toString() {
 		if (count == 0)
 			return "[]";
-
 		Node<E> n = headStret;
-
 		StringBuffer sb = new StringBuffer();
 		sb.append("[");
-
 		for (int i = 0; i < count - 1; i++) {
-
 			sb.append(n.getStret() + ",");
 			n = n.nextStret;
 		}
 		sb.append(n.getStret());
 		sb.append("]");
-
 		return sb.toString();
 	}
 
@@ -315,7 +303,6 @@ public class Acidentes<E> implements ListaTAD<E> {
 	@Override
 	public void set(int index, E element) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -323,8 +310,8 @@ public class Acidentes<E> implements ListaTAD<E> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public boolean containsAv (String si) {
+
+	public boolean containsAv(String si) {
 		Node<E> aux = headStret;
 		for (int i = 1; i <= count; i++) {
 			String se = (String) aux.lista[0];
@@ -332,7 +319,6 @@ public class Acidentes<E> implements ListaTAD<E> {
 				return true;
 			aux = aux.nextStret;
 		}
-
 		return false;
 	}
 
@@ -349,108 +335,96 @@ public class Acidentes<E> implements ListaTAD<E> {
 				+ s.subSequence(0, 4);
 		return s;
 	}
-	
-	public void setCorrigeData(){
+
+	public void setCorrigeData() {
 		Node<E> aux = headDate;
-		for (int i = 0; i<count;i++){
+		for (int i = 0; i < count; i++) {
 			String s = (String) aux.lista[2];
-			if (s.length()<12){
+			if (s.length() < 12) {
 				aux.lista[2] = (E) (s + " 00:00");
 				aux.lista[18] = (E) "NOITE";
 				System.out.println(s);
-				//teste de commit
+				// teste de commit
 			}
 			aux = aux.nextDate;
-			
-			
 		}
-		
-		
 	}
-	
-	public String horaMaisAcidentes(){
-		Node aux = headDate;
-		//cria uma lista de 24 inteiros e coloca zero em todos os elementos dela.
 
-		int [] horas = new int[24];
-		for(int i=0; i<24; i++){
-		horas[i]=0;
+	public String horaMaisAcidentes() {
+		Node<E> aux = headDate;
+		// cria uma lista de 24 inteiros e coloca zero em todos os elementos
+		// dela.
+		int[] horas = new int[24];
+		for (int i = 0; i < 24; i++) {
+			horas[i] = 0;
 		}
-
-		    // esse FOR percorre toda a lista
-		    // ele pega a String da data e hora
-		    // e faz e retiara apenas o inteiro da hora
-		    // esse inteiro ele apenas soma um na posi��o da hora
-
-		    for (int i = 0;i < count; i++ ){
-		        String s = (String) aux.lista[2];
-		        // aqui tive que ser obrigado a utilizar o TRY, por conta de erros na formata��o da linha.
-		        try{
-		        int h = Integer.parseInt(s.substring(9, 11));   
-		        horas[h] = horas[h] + 1;
-		        }
-		        catch(Exception e){
-		            //System.out.println("erro na formata��o da linha " + i );
-		        }
-		        aux=aux.nextDate;
-		    }
-
-		    // nessa parte ele verifica qual a hora com maior numero de acidentes.
-		    String j = "00h";
-		    int x = horas[0];
-		    System.out.println(x + " 0h");
-		    for(int i=1; i<24; i++){
-		        if(horas[i] > x){
-		            if(i <10) j = "0" + i + "h";
-		            j = i + "h";
-		            x = horas[i];
-		        }else if(horas[i]==x){
-		            if(i <10) j = j + " 0" + i + "h";
-		            j = j + " " + i + "h";
-		        }
-
-		    }
-
-
-		    return j;
+		// esse FOR percorre toda a lista
+		// ele pega a String da data e hora
+		// e faz e retiara apenas o inteiro da hora
+		// esse inteiro ele apenas soma um na posição da hora
+		for (int i = 0; i < count; i++) {
+			String s = (String) aux.lista[2];
+			// aqui tive que ser obrigado a utilizar o TRY, por conta de erros
+			// na formatação da linha.
+			try {
+				int h = Integer.parseInt(s.substring(9, 11));
+				horas[h] = horas[h] + 1;
+			} catch (Exception e) {
+				// System.out.println("erro na formatação da linha " + i );
+			}
+			aux = aux.nextDate;
 		}
-		// m�todo que retorna uma String com o dia que tiveram mais acidente no Arquivo.
-		public String diaMaisAcidentes() {
-
-		    Node<E> aux = headDate;
-		    int contaMaior = 0;
-		    int contaMenor = 0;
-		    String j = "";
-		    String s;
-		    String s2;
-		    String su = "";
-		    String su2 = "";
-
-		    for (int i = 0; i < count; i++) {
-
-		        contaMenor++;
-		        try {
-		            s = (String) aux.lista[2];
-		            su = s.substring(0, 8);
-		            s2 = (String) aux.nextDate.lista[2];
-		            su2 = s2.substring(0, 8);
-		        } catch (Exception e) {
-		            su2 = "";
-		        }
-		        if (!su.equals(su2)) {
-
-		            if (contaMenor > contaMaior) {
-		                contaMaior = contaMenor;
-		                j = su;
-		            } else if (contaMenor == contaMaior) {
-		                j = j + "\n" +  ;
-		            }
-		            contaMenor = 0;
-		        }
-		        aux = aux.nextDate;
-		    }
-		    return j + " Com " + contaMaior + " Acidentes";
+		// nessa parte ele verifica qual a hora com maior numero de acidentes.
+		String j = "00h";
+		int x = horas[0];
+		System.out.println(x + " 0h");
+		for (int i = 1; i < 24; i++) {
+			if (horas[i] > x) {
+				if (i < 10)
+					j = "0" + i + "h";
+				j = i + "h";
+				x = horas[i];
+			} else if (horas[i] == x) {
+				if (i < 10)
+					j = j + " 0" + i + "h";
+				j = j + " " + i + "h";
+			}
 		}
-	
+		return j;
+	}
 
+	// método que retorna uma String com o dia que tiveram mais acidente no
+	// Arquivo.
+	public String diaMaisAcidentes() {
+		Node<E> aux = headDate;
+		int contaMaior = 0;
+		int contaMenor = 0;
+		String j = "";
+		String s;
+		String s2;
+		String su = "";
+		String su2 = "";
+		for (int i = 0; i < count; i++) {
+			contaMenor++;
+			try {
+				s = (String) aux.lista[2];
+				su = s.substring(0, 8);
+				s2 = (String) aux.nextDate.lista[2];
+				su2 = s2.substring(0, 8);
+			} catch (Exception e) {
+				su2 = "";
+			}
+			if (!su.equals(su2)) {
+				if (contaMenor > contaMaior) {
+					contaMaior = contaMenor;
+					j = su;
+				} else if (contaMenor == contaMaior) {
+					j = j + "\n";
+				}
+				contaMenor = 0;
+			}
+			aux = aux.nextDate;
+		}
+		return j + " Com " + contaMaior + " Acidentes";
+	}
 }
